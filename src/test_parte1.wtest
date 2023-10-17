@@ -1,0 +1,47 @@
+import pacientes.*
+import aparatos.*
+
+
+describe "Test Parte 1" {
+	
+	const leonardo = new Paciente(edad=40,nivelDeDolor=10,nivelDeFortaleza=20)
+	const milena = new Paciente(edad=3,nivelDeDolor=30,nivelDeFortaleza=50)
+	const magnet = new Magneto()
+	const bici = new Bicicleta()
+	const miniTramp = new Minitramp()
+	
+	method initialize(){
+
+	}
+	
+	test "Leonardo puede utilizar todos los aparatos" {
+		const aparatos = [magnet,bici,miniTramp]
+		assert.that(aparatos.all({aparato => leonardo.puedeUtilizarAparato(aparato)}))
+	}
+	
+	test "Milena puede utilizar solo el magneto" {
+		const aparatos = [magnet,bici,miniTramp]
+		const booleans = aparatos.map({ aparato => milena.puedeUtilizarAparato(aparato)})
+		assert.equals([true,false,false], booleans)
+	}
+	
+	test "Leonardo obtiene nivel de dolor 9 despues de usar el magneto"{
+		leonardo.utilizarAparato(magnet)
+		assert.equals(9, leonardo.nivelDeDolor())
+	}
+	
+	test "Milena obtiene nivel de dolor 27 despues de usar el magneto"{
+		milena.utilizarAparato(magnet)
+		assert.equals(27, milena.nivelDeDolor())
+	}
+	
+	test "Leonardo obtiene nivel de dolor 6 y fortaleza 23 despues de usar la bicicleta"{
+		leonardo.utilizarAparato(bici)
+		assert.equals([6, 23], [leonardo.nivelDeDolor(),leonardo.nivelDeFortaleza()])
+	}
+	
+	test "Leonardo obtiene nivel de fortaleza 24 despues de usar el minitramp"{
+		leonardo.utilizarAparato(miniTramp)
+		assert.equals(24, leonardo.nivelDeFortaleza())
+	}
+}

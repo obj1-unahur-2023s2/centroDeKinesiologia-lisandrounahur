@@ -1,0 +1,52 @@
+import pacientes.*
+import aparatos.*
+
+describe "test parte 3" {
+
+	const magnetVerde = new Magneto(color="verde")
+	const biciRoja = new Bicicleta(color="rojo")
+	const miniTramp = new Minitramp(color="blanco")
+	const bici = new Bicicleta(color="blanco")
+	const magnet = new Magneto(color="blanco")
+	const nicolas = new PacienteResistente(edad=40,nivelDeDolor=10,nivelDeFortaleza=20,rutina=[bici,miniTramp,bici,magnet])
+	const julian = new PacienteCaprichoso(edad=20,nivelDeDolor=54,nivelDeFortaleza=50,rutina=[biciRoja,magnetVerde,bici])
+	const victoria = new PacienteCaprichoso(edad=30,nivelDeDolor=10,nivelDeFortaleza=40,rutina=[bici,miniTramp,bici,magnet])
+	const zoe = new PacienteRapidaRecuperacion(edad=50,nivelDeDolor=14,nivelDeFortaleza=40,rutina=[bici,miniTramp,bici,magnet])
+	method initialize(){}
+	
+	test "Nicolas puede realizar la rutina asignada" {
+		assert.that(nicolas.puedeRealizarRutina())
+	}
+	
+	test "Nicolas nivel de dolor 1.8 despues de rutina"{
+		nicolas.realizarRutina()
+		assert.equals(1.8, nicolas.nivelDeDolor())
+	}
+	
+	test "Nicolas nivel de fortaleza 34 despues de rutina"{
+		nicolas.realizarRutina()
+		assert.equals(34, nicolas.nivelDeFortaleza())
+	}
+	
+	test "Victoria no puede realizar rutina"{
+		assert.notThat(victoria.puedeRealizarRutina())
+	}
+	
+	test "Julian puede hacer la rutina que tiene asignada"{
+		assert.that(julian.puedeRealizarRutina())
+	}
+	
+	test "Julian nivel de dolor baja a 29.3 despues de rutina" {
+		julian.realizarRutina()
+		assert.equals(29.3, julian.nivelDeDolor())
+	}
+	
+	test "Julian fortaleza sube a 62 despues de rutina" {
+		julian.realizarRutina()
+		assert.equals(62, julian.nivelDeFortaleza())
+	}
+	
+	test "Zoe puede hacer la rutina que tiene asignada" {
+		assert.that(zoe.puedeRealizarRutina())
+	}
+}
